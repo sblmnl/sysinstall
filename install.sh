@@ -6,7 +6,11 @@ script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 current_user=$(id -u -n)
 script_mode=$([ $current_user = "root" ] && echo "root" || echo "user")
 
-cd $script_dir/$script_mode
+cd $script_dir
+
+git remote set-url origin git@github.com:sblmnl/sysinstall.git
+
+cd $script_mode
 
 function run_script() {
     path=$1
