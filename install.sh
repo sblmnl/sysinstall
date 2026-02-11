@@ -82,6 +82,9 @@ function install_user() {
     xdg-user-dirs-update
     xdg-user-dirs-gtk-update
 
+    # install node.js
+    run_script nodejs.sh
+
     # install autotiling
     run_script autotiling.sh
 
