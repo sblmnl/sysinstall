@@ -3,16 +3,16 @@
 tee /etc/apt/sources.list <<EOF
 #deb cdrom:[Debian GNU/Linux 13.3.0 _Trixie_ - Official amd64 NETINST with firmware 20260110-10:59]/ trixie contrib main non-free-firmware
 
-deb http://deb.debian.org/debian/ trixie main non-free-firmware contrib non-free
-deb-src http://deb.debian.org/debian/ trixie main non-free-firmware contrib non-free
+deb https://deb.debian.org/debian/ trixie main non-free-firmware contrib non-free
+deb-src https://deb.debian.org/debian/ trixie main non-free-firmware contrib non-free
 
-deb http://security.debian.org/debian-security trixie-security main non-free-firmware contrib non-free
-deb-src http://security.debian.org/debian-security trixie-security main non-free-firmware contrib non-free
+deb https://security.debian.org/debian-security trixie-security main non-free-firmware contrib non-free
+deb-src https://security.debian.org/debian-security trixie-security main non-free-firmware contrib non-free
 
 # trixie-updates, to get updates before a point release is made;
 # see https://www.debian.org/doc/manuals/debian-reference/ch02.en.html#_updates_and_backports
-deb http://deb.debian.org/debian/ trixie-updates main non-free-firmware contrib non-free
-deb-src http://deb.debian.org/debian/ trixie-updates main non-free-firmware contrib non-free
+deb https://deb.debian.org/debian/ trixie-updates main non-free-firmware contrib non-free
+deb-src https://deb.debian.org/debian/ trixie-updates main non-free-firmware contrib non-free
 
 # This system was installed using removable media other than
 # CD/DVD/BD (e.g. USB stick, SD card, ISO image file).
@@ -47,7 +47,8 @@ apt install -y \
     jq \
     bc \
     python3-full \
-    python3-pip
+    python3-pip \
+    pcscd
 
 # add me to sudoers
 usermod -aG sudo jared

@@ -75,6 +75,9 @@ function install_root() {
 }
 
 function install_user() {
+    # configure vscode
+    run_script vscode.sh
+
     # import dotfiles
     run_script dotfiles.sh
 

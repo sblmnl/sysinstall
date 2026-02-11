@@ -1,5 +1,10 @@
 #!/bin/sh
 
+tee /etc/resolv.conf <<EOF
+nameserver 1.1.1.1
+nameserver 1.0.0.1
+EOF
+
 tee /etc/network/interfaces <<EOF
 # This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
@@ -17,7 +22,6 @@ iface enp4s0 inet static
     netmask 255.255.255.0
     gateway 192.168.1.1
     broadcast 192.168.1.255
-    dns-nameservers 1.1.1.1 1.0.0.1
 EOF
 
 systemctl restart networking

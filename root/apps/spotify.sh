@@ -24,7 +24,13 @@ chattr +i $keyring_file
 # add apt repository
 apt_srcs_file="/etc/apt/sources.list.d/spotify.sources"
 
-tee /etc/apt/sources.list.d/spotify.sources <<EOF
+tee /etc/apt/sources.list.d/spotify.list <<EOF
+# THIS FILE EXISTS TO PREVENT SPOTIFY FROM SETTING ITS OWN SOURCES
+EOF
+
+chattr +i /etc/apt/sources.list.d/spotify.list
+
+tee $apt_srcs_file <<EOF
 Types: deb
 URIs: https://repository.spotify.com/
 Suites: stable
@@ -36,3 +42,18 @@ chattr +i $apt_srcs_file
 
 # install spotify
 apt update && apt install spotify-client
+
+# add desktop entry
+tee /usr/share/applications/spotify.desktop <<EOF
+[Desktop Entry]
+Name=Spotify
+GenericName=Music Player
+Comment=Listen to music using Spotify
+Icon=spotify-client
+Exec=spotify %U
+TryExec=spotify
+Terminal=false
+Type=Application
+Categories=Qt;Audio;Music;Player;AudioVideo
+MimeType=x-scheme-handler/spotify
+EOF

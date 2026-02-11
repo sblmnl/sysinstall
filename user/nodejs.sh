@@ -12,8 +12,14 @@ if ! echo "$checksum  install.sh" | sha256sum -c --status -; then
     exit 1
 fi
 
-bash install.sh
+original_dir=$(pwd)
+
+cd ~/
+
+cat $original_dir/install.sh | bash
 \. "$HOME/.nvm/nvm.sh"
 nvm install 24
+
+cd $original_dir
 
 rm install.sh
