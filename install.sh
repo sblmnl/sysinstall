@@ -11,7 +11,7 @@ cd $script_dir/$script_mode
 function run_script() {
     path=$1
     echo "Executing script '$path'..."
-    ./$path >>~/install.log 2>>~/install-errors.log
+    ./$path > >(tee -a ~/install.log) 2> >(tee -a ~/install-errors.log >&2)
 }
 
 function run_scripts() {
@@ -52,7 +52,7 @@ function install_root() {
     chown $non_root_user /home/$non_root_user/install*.log
 
     # print any logged installation errors
-    cat ~/install-errors.log
+    cat /home/$non_root_user/install-errors.log
 
     # move files to user home folder
     cd ~/

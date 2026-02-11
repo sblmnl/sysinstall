@@ -19,12 +19,15 @@ then
     exit 1
 fi
 
+chattr +i $keyring_file
+
 # add apt repository
+apt_srcs_file="/etc/apt/sources.list.d/jellyfin.sources"
 os_arch="$( dpkg --print-architecture )"
 os_name="$( awk -F'=' '/^ID=/{ print $NF }' /etc/os-release )"
 os_version_codename="$( awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release )"
 
-tee /etc/apt/sources.list.d/jellyfin.sources <<EOF
+tee $apt_srcs_file <<EOF
 Types: deb
 URIs: https://repo.jellyfin.org/${os_name}
 Suites: ${os_version_codename}
@@ -32,6 +35,8 @@ Components: main
 Architectures: ${os_arch}
 Signed-By: ${keyring_file}
 EOF
+
+chattr +i $apt_srcs_file
 
 # install jellyfin
 apt update && apt install -y jellyfin

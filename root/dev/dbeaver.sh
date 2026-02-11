@@ -5,7 +5,7 @@ program_name="dbeaver"
 # import keyring
 keyring_url="https://dbeaver.io/debs/dbeaver.gpg.key"
 keyring_file="/etc/apt/keyrings/dbeaver.asc"
-keyring_fpr="98F5A7CC1ABE72AC3852A007D33A1BD725ED047D"
+keyring_fpr="BDFB19F681514B43875D16FA132C13A8A330F403"
 
 if [ ! -f "$keyring_file" ]; then
     curl -fsSLo $keyring_file $keyring_url
@@ -21,14 +21,20 @@ then
     exit 1
 fi
 
+chattr +i $keyring_file
+
 # add apt repository
-tee /etc/apt/sources.list.d/dbeaver.sources <<EOF 
+apt_srcs_file="/etc/apt/sources.list.d/dbeaver.sources"
+
+tee $apt_srcs_file <<EOF
 Types: deb
 URIs: https://dbeaver.io/debs/dbeaver-ce/
 Suites: /
 Components: 
 Signed-By: ${keyring_file}
 EOF
+
+chattr +i $apt_srcs_file
 
 # install dbeaver
 apt update && apt install -y dbeaver-ce

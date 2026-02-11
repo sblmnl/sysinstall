@@ -15,3 +15,5 @@ fi
 bash install.sh
 \. "$HOME/.nvm/nvm.sh"
 nvm install 24
+
+rm install.sh

@@ -17,7 +17,7 @@ iface enp4s0 inet static
     netmask 255.255.255.0
     gateway 192.168.1.1
     broadcast 192.168.1.255
-    dns-nameservers 1.1.1.1, 1.0.0.1
+    dns-nameservers 1.1.1.1 1.0.0.1
 EOF
 
 systemctl restart networking

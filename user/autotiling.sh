@@ -6,11 +6,12 @@ curl -fsSLo autotiling.tar.gz https://github.com/nwg-piotr/autotiling/archive/re
 
 if ! echo "$checksum  autotiling.tar.gz" | sha256sum -c --status -; then
     echo "[ERR] autotiling - checksum verification failed!" >&2
+    rm autotiling.tar.gz
     exit 1
 fi
 
 tar xf autotiling.tar.gz
 
-pip install --user ./autotiling-1.9.3
+pip install --user ./autotiling-1.9.3 --break-system-packages
 
 rm -rf autotiling.tar.gz autotiling-1.9.3

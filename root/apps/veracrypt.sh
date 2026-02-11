@@ -19,9 +19,6 @@ then
     exit 1
 fi
 
-gpg --import $sig_key_file
-rm $sig_key_file
-
 # download release
 release_version="1.26.24"
 release_tag="VeraCrypt_$release_version"
@@ -33,15 +30,15 @@ curl -fsSLO "$release_base_url/$release_pkg_file"
 curl -fsSLO "$release_base_url/$release_sig_file"
 
 # verify signature
-if ! gpg --verify $release_sig_file; then
+if ! gpg --no-default-keyring --keyring $sig_key_file --verify $release_sig_file; then
     echo "[ERR] $program_name - signature verification failed!" >&2
-    rm $release_pkg_file $release_sig_file
+    rm $release_pkg_file $release_sig_file $sig_key_file
     exit 1
 fi
 
 # install veracrypt
 apt install -y pcscd
-apt install -y -f $release_pkg_file
+apt install -y ./$release_pkg_file
 
 # cleanup
-rm $release_pkg_file $release_sig_file
+rm $release_pkg_file $release_sig_file $sig_key_file

@@ -14,15 +14,18 @@ if [ $(gpg --show-keys --with-colons $keyring_file \
     | tr '\n' ' ' \
     | sed 's/ $//') != $keyring_fpr ]
 then
-    echo "[ERR] brave - keyring fingerprint verification failed!" >&2
+    echo "[ERR] $program_name - keyring fingerprint verification failed!" >&2
     rm $keyring_file
     exit 1
 fi
 
+chattr +i $keyring_file
+
 # add apt repository
+apt_srcs_file="/etc/apt/sources.list.d/brave-browser-release.sources"
 os_arch="$( dpkg --print-architecture )"
 
-tee /etc/apt/sources.list.d/brave-browser-release.sources <<EOF
+tee $apt_srcs_file <<EOF
 Types: deb
 URIs: https://brave-browser-apt-release.s3.brave.com
 Suites: stable
@@ -30,6 +33,8 @@ Components: main
 Architectures: ${os_arch}
 Signed-By: ${keyring_file}
 EOF
+
+chattr +i $apt_srcs_file
 
 # install brave
 apt update && apt install -y brave-browser

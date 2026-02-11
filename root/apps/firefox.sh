@@ -19,14 +19,20 @@ then
     exit 1
 fi
 
+chattr +i $keyring_file
+
 # add apt repository
-tee /etc/apt/sources.list.d/mozilla.sources <<EOF
+apt_srcs_file="/etc/apt/sources.list.d/mozilla.sources"
+
+tee $apt_srcs_file <<EOF
 Types: deb
 URIs: https://packages.mozilla.org/apt
 Suites: mozilla
 Components: main
 Signed-By: ${keyring_file}
 EOF
+
+chattr +i $apt_srcs_file
 
 # configure apt to prioritize the mozilla repository
 echo '

@@ -19,7 +19,11 @@ then
     exit 1
 fi
 
+chattr +i $keyring_file
+
 # add apt repository
+apt_srcs_file="/etc/apt/sources.list.d/spotify.sources"
+
 tee /etc/apt/sources.list.d/spotify.sources <<EOF
 Types: deb
 URIs: https://repository.spotify.com/
@@ -27,6 +31,8 @@ Suites: stable
 Components: non-free
 Signed-By: ${keyring_file}
 EOF
+
+chattr +i $apt_srcs_file
 
 # install spotify
 apt update && apt install spotify-client

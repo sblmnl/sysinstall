@@ -1,27 +1,30 @@
 #!/bin/sh
 
-# add apt repositories
-tee /etc/apt/sources.list.d/debian.sources <<EOF
-Types: deb deb-src
-URIs: http://deb.debian.org/debian/
-Suites: trixie
-Components: main contrib non-free non-free-firmware
-Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+tee /etc/apt/sources.list <<EOF
+#deb cdrom:[Debian GNU/Linux 13.3.0 _Trixie_ - Official amd64 NETINST with firmware 20260110-10:59]/ trixie contrib main non-free-firmware
 
-Types: deb deb-src
-URIs: http://security.debian.org/debian-security/
-Suites: trixie-security
-Components: main contrib non-free non-free-firmware
-Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+deb http://deb.debian.org/debian/ trixie main non-free-firmware contrib non-free
+deb-src http://deb.debian.org/debian/ trixie main non-free-firmware contrib non-free
 
-Types: deb deb-src
-URIs: http://deb.debian.org/debian/
-Suites: trixie-updates
-Components: main contrib non-free non-free-firmware
-Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+deb http://security.debian.org/debian-security trixie-security main non-free-firmware contrib non-free
+deb-src http://security.debian.org/debian-security trixie-security main non-free-firmware contrib non-free
+
+# trixie-updates, to get updates before a point release is made;
+# see https://www.debian.org/doc/manuals/debian-reference/ch02.en.html#_updates_and_backports
+deb http://deb.debian.org/debian/ trixie-updates main non-free-firmware contrib non-free
+deb-src http://deb.debian.org/debian/ trixie-updates main non-free-firmware contrib non-free
+
+# This system was installed using removable media other than
+# CD/DVD/BD (e.g. USB stick, SD card, ISO image file).
+# The matching "deb cdrom" entries were disabled at the end
+# of the installation process.
+# For information about how to configure apt package sources,
+# see the sources.list(5) manual.
 EOF
 
-apt update && apt upgrade -y
+apt modernize-sources
+apt update
+apt upgrade -y
 
 # set apt keyring permissions
 install -m 0755 -d /etc/apt/keyrings
@@ -34,7 +37,6 @@ apt install -y \
     apt-transport-https \
     ca-certificates \
     gnupg \
-    minisign \
     pinentry-tty \
     git \
     curl \
@@ -44,7 +46,8 @@ apt install -y \
     calc \
     jq \
     bc \
-    python3-full
+    python3-full \
+    python3-pip
 
 # add me to sudoers
 usermod -aG sudo jared

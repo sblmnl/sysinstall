@@ -2,7 +2,7 @@
 
 original_dir=$(pwd)
 
-git clone git@github.com:sblmnl/dotfiles.git ~/.dotfiles
+git clone https://github.com/sblmnl/dotfiles ~/.dotfiles
 
 cd ~/.dotfiles
 

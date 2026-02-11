@@ -19,14 +19,20 @@ then
     exit 1
 fi
 
+chattr +i $keyring_file
+
 # add apt repository
-tee /etc/apt/sources.list.d/signal-xenial.sources <<EOF
+apt_srcs_file="/etc/apt/sources.list.d/signal-xenial.sources"
+
+tee $apt_srcs_file <<EOF
 Types: deb
 URIs: https://updates.signal.org/desktop/apt/
 Suites: xenial
 Components: main
 Signed-By: ${keyring_file}
 EOF
+
+chattr +i $apt_srcs_file
 
 # install signal
 apt update && apt install -y signal-desktop

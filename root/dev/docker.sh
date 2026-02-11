@@ -21,9 +21,11 @@ then
     exit 1
 fi
 
-chmod a+r $keyring_file
+chattr +i $keyring_file
 
 # add apt repository
+apt_srcs_file="/etc/apt/sources.list.d/docker.sources"
+
 tee /etc/apt/sources.list.d/docker.sources <<EOF
 Types: deb
 URIs: https://download.docker.com/linux/debian
@@ -32,6 +34,9 @@ Components: stable
 Signed-By: ${keyring_file}
 EOF
 
+chattr +i $apt_srcs_file
+
+# install docker
 apt update && apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 usermod -aG docker jared
