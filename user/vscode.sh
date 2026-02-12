@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 extensions=(
     "ms-dotnettools.csharp"
@@ -13,8 +13,8 @@ extensions=(
     "vue.volar"
 )
 
-for extension in $extensions; do
-    code --install-extension $extension
+for extension in "${extensions[@]}"; do
+    code --install-extension $extension --force
 done
 
 mkdir -p ~/.config/Code/User

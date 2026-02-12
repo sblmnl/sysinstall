@@ -5,4 +5,5 @@ apt install -y \
     qemu-system-x86 \
     qemu-system-gui \
     bridge-utils \
+    virtiofsd \
     virt-manager
