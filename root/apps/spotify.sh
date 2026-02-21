@@ -3,9 +3,9 @@
 program_name="spotify"
 
 # import keyring
-keyring_url="https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg"
+keyring_url="https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.asc"
 keyring_file="/etc/apt/keyrings/spotify.asc"
-keyring_fpr="B420FD3777CCE3A7F0076B55C85668DF69375001"
+keyring_fpr="E1096BCBFF6D418796DE78515384CE82BA52C83A"
 
 curl -fsSLo $keyring_file $keyring_url
 
