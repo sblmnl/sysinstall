@@ -9,4 +9,3 @@ apt install -y \
     opensc-pkcs11 \
     vsmartcard-vpcd \
     libnss3-tools
-
